@@ -1,95 +1,68 @@
 # macro-lisp
 
-Lisp-like DSL for Rust language.
-[![Build Status](https://travis-ci.org/JunSuzukiJapan/macro-lisp.svg?branch=master)](https://travis-ci.org/JunSuzukiJapan/macro-lisp)
-[![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
+## Overview
+Part of the DEFRecord 2025 Engineering Strategy, this repository contributes to our development ecosystem.
 
-# Installation
+## Strategic Alignment
+This project aligns with our 2025 strategy through:
+- Tool Integration
+- System Compatibility
+- Performance Standards
+- Documentation Requirements
 
-include the following in your Cargo.toml file:
+## Features
+- Core functionality
+- Integration capabilities
+- Documentation
+- Testing framework
 
-```toml
-[dependencies]
-macro_lisp="0.2.0"
-```
+## Getting Started
+### Prerequisites
+- Python 3.8+
+- Git
+- Docker (optional)
 
-And then import the library using:
+### Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/defrecord/macro-lisp.git
+   cd macro-lisp
+   ```
 
-```rust
-extern crate macro_lisp;
+2. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-use macro_lisp::lisp;
-```
+3. Configure environment:
+   ```bash
+   cp .env.example .env
+   # Edit .env with your settings
+   ```
 
-# Examples
+4. Run tests:
+   ```bash
+   python -m pytest
+   ```
 
-## factorial
+## Integration
+This project integrates with the DEFRecord ecosystem:
+- AI Infrastructure: Compatible with AI infrastructure
+- Tool Chain: Integrates with tool chain
+- Research Framework: Supports research framework
 
-``` rust
-extern crate macro_lisp;
+## Contributing
+We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) and review our [Code of Conduct](CODE_OF_CONDUCT.md).
 
-use macro_lisp::lisp;
+## Documentation
+- [API Documentation](docs/API.md)
+- [Architecture Overview](docs/ARCHITECTURE.md)
+- [Development Guide](docs/DEVELOPMENT.md)
 
-lisp!(defun factorial ((n i32)) i32
-  (if (<= n 1)
-    1
-    (* n (factorial (- n 1)))));
+## Community
+- [GitHub Discussions](https://github.com/defrecord/macro-lisp/discussions)
+- [Issue Tracker](https://github.com/defrecord/macro-lisp/issues)
+- [Project Board](https://github.com/orgs/defrecord/projects?query=is%3Aopen)
 
-lisp!(defun main () ()
-    (defconstant num (factorial 10))
-    (println "10! = {}" num));
-```
-
-## wc
-
-``` rust
-extern crate macro_lisp;
-
-use macro_lisp::lisp;
-
-lisp!(use std::env);
-lisp!(use std::process::exit);
-
-lisp!(defun is_whitespace ((b u8)) bool
-    (match b
-        (0x20 | 0x09 | 0x85 | 0x0a | 0x0b | 0x0c | 0x0d => (true))
-        (_ => (false) ))
-);
-
-lisp!(defun main () ()
-    (defconstant (args Vec<String>) env::args().collect())
-    (if (< (len args) 2)
-        (progn
-            (println "usage: wc file")
-            (exit 0)))
-
-    (defvar char_count 0)
-    (defvar word_count 0)
-    (defvar line_count 0)
-    (defvar in_word false)
-
-    (defconstant path &args[1])
-    (with-input-from-file (file path)
-        (doiter (byte file.bytes())
-            (incf char_count)
-
-            (defconstant b byte.unwrap())
-            (if (== b 0x0a)
-                (incf line_count))
-
-            (if in_word
-                (if (is_whitespace b)
-                    (setf in_word false))
-                (if (! (is_whitespace b))
-                    (progn
-                        (setf in_word true)
-                        (incf word_count))))))
-
-    (println "{:>10} {:>10} {:>10} {}" line_count word_count char_count path)
-);
-```
-
-# License
-
-[MIT](LICENSE)
-
+## License
+This project is licensed under the terms of the MIT license. See [LICENSE](LICENSE) for more details.
